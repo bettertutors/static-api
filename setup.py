@@ -1,6 +1,6 @@
 from setuptools import setup
 from urllib import urlretrieve
-from os import mkdir, path, remove
+from os import mkdir, path, remove, environ
 from shutil import rmtree
 from zipfile import ZipFile
 
@@ -17,13 +17,15 @@ def download_and_extract_static():  # Guessing that having this function in "set
     if not path.isfile(filename):
         raise IOError('Failed to retrieve static files from GitHub')
 
+    folder_name = path.join(environ.get('HOME', path.join('/', 'wwwroot')), folder_name)
+
     if path.isdir(folder_name):
-        rmtree(folder_name)
-    mkdir(folder_name)
+        rmtree(folder_name)  # Might be better to clear contents and not folder, in case you've chowned it
+    mkdir(folder_name)       # Or just chown it again at the end of this function
 
     print 'Extracting zip file...'
     with ZipFile(filename) as zip_f:
-        zip_f.extractall(folder_name)
+        zip_f.extractall()
 
 
 if __name__ == '__main__':
@@ -33,7 +35,7 @@ if __name__ == '__main__':
 
     setup(
         name=package_name,
-        version='0.1.0',
+        version='0.1.1',
         author='Samuel Marks',
         py_modules=[package_name],
         install_requires=['bottle', 'webtest'],
