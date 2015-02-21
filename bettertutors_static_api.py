@@ -16,7 +16,7 @@ def static_router(pathname):
     if not path.isdir('static'):
         response.status = 404
         return {'error': 'NotFound', 'error_message': 'static directory not existent'}
-    return static_file(pathname, 'static')
+    return static_file(path.join('static', 'web-frontend-master', 'www', pathname), 'static')
 
 
 if __name__ == '__main__':

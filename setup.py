@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     setup(
         name=package_name,
-        version='0.1.1',
+        version='0.1.2',
         author='Samuel Marks',
         py_modules=[package_name],
         install_requires=['bottle', 'webtest'],
